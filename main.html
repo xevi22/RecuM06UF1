@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Document</title>
+    <style>
+        #main {
+            height: 200px;
+            width: 600px;/*50%;*/
+            background-color: navy;
+            color:white;
+            border: 10px solid black;
+            margin: 0 auto;
+            /* margin-top: 100px;*/
+        }
+        #buttons{
+            width: 150px;/*50%;*/
+            /*height: 50px;/*50%;*/
+            margin: 0 auto;
+            padding: 2em;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <!--h1>Click "Get Info" to provide your details</h1-->
+
+        <h1>Hi, "your full name goes here"!!!</h1>
+        <p>You were born on <strong>"Your birth date goes here"</strong></p>
+        <p>That day was <strong>"The date of week goes here"</strong></p>
+        <p>And untill now, you have had <strong>"n"</strong> birthdays on that day of week</p>
+
+
+    </div>
+    <div id="buttons">
+        <input id="1" type="button" onclick="loadWindow()" value="Get Info">
+        <input id="2" type="button" onclick="refreshWindow()" value="Refresh">
+
+    </div>
+<script>
+    addEventListener("load",()=>{
+        /*Afegeix el codi aquí per tal que faci tot el que es
+        * demana quan carreguem inicialment la pàgina*/
+            let divMain = document.getElementById('main');
+            const xaxa = document.getElementsByTagName('h1');
+            let date = getCookieValue(document.cookie, 'birthDate');
+            let nom = getCookieValue(document.cookie, 'name');
+            let cog = getCookieValue(document.cookie, 'surname');
+            if(cog === ''){
+                divMain.textContent = "Click 'Get Info' to provide yours details";
+            }else{
+                let text = "Hi, "+nom +" "+ cog+"!!!"
+
+                document.getElementsByTagName("h1")[0].textContent = text
+                document.getElementsByTagName("strong")[0].textContent = date
+                let datee = new Date (date)
+                console.log(datee.getDay())
+                let dies = ['dilluns','dimarts','dimecres','dijous','divendres','dissabte','diumenge'];
+                if(datee.getDay()==0){
+                    document.getElementsByTagName("strong")[1].textContent = dies[6]
+                }else{
+                    document.getElementsByTagName("strong")[1].textContent = dies[datee.getDay()-1]
+                }
+                
+            }
+        })
+
+    /*Code adapted from www.w3schools.com*/
+    const getCookieValue= (cookieStr, cookieName)=>{
+        let name = cookieName + "=";
+        let ca = cookieStr.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
+
+    const loadWindow=()=>{
+        /*Afegeix el codi aquí per tal que mostri la pàgina Secondary.html*/
+        return  location.href = 'http://127.0.0.1:5500/Secondary.html';
+    }
+
+    const refreshWindow=()=>{
+        /*Afegeix el codi aquí per tal que actualitzi la pàgina*/
+        return location.reload();
+    }
+
+
+</script>
+
+</body>
+</html>
